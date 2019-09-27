@@ -1,0 +1,27 @@
+#确保都有免密登录，如果不能免密，需要指定密码，并对代码进行特殊处理
+settings:
+  servers:
+    list:
+      - ip: 10.10.10.102
+        port: 22
+        hostname: myserver01
+        username: admin66
+        password: abc123
+        apps:
+          - mongo
+      - ip: 10.10.10.102
+        port: 2222
+        hostname: myserver02
+        username: qop
+        password: ceeeeeeeb
+        apps:
+          - mysql
+          - redis
+          - zookeeper
+      - ip: 10.10.10.103
+        port: 2202
+        hostname: mykafkaserver
+        username: admin66
+        password: abc123#123123
+        apps:
+          - kafka

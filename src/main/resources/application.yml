@@ -1,0 +1,32 @@
+server:
+  port: 17770
+spring:
+  application:
+    name: server-detective
+  mail:
+    default-encoding: utf-8
+    host: smtp.163.com
+    port: 465
+    username: abc@163.com
+    password: abcabc
+    protocol: smtp
+    test-connection: true
+    properties:
+      mail:
+        smtp:
+          auth: true
+          port: 465
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+            fallback: false
+            port: 465
+email:
+  from: lnwoiot@163.com
+  #多个用逗号分开
+  to: 860060186@qq.com
+  title: XXX服务器监控
+  #多个用逗号分开
+  specialTo: 860060186@qq.com,zzj@ithinkcry.cn
+  special: true
+test:
+  local: false

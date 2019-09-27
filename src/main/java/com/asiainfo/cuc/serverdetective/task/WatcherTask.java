@@ -58,9 +58,9 @@ public class WatcherTask extends QuartzJobBean {
                 stringBuffer.append(assembleEachServer(list));
             }
             String content = stringBuffer.toString();
-            System.out.println("=============================================================");
-            System.out.println(content);
-            System.out.println("=============================================================");
+            log.info("=============================================================");
+            log.info(content);
+            log.info("=============================================================");
             if(special){
                 emailService.sendSecret(content);
             }else{

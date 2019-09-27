@@ -52,6 +52,6 @@ public class EmailService {
         simpleMailMessage.setSubject(title);
         simpleMailMessage.setText(content);
         javaMailSender.send(simpleMailMessage);
-        System.out.println("邮件发送完毕" );
+        log.info("邮件发送完毕" );
     }
 }

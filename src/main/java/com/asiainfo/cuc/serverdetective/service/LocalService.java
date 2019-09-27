@@ -1,6 +1,7 @@
 package com.asiainfo.cuc.serverdetective.service;
 
 import com.asiainfo.cuc.serverdetective.entity.Server;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 @Service
+@Slf4j
 public class LocalService {
 
     @Value("${test.local}")
@@ -191,7 +193,7 @@ public class LocalService {
             list = readLine(inputStream);
             pro.destroy();
         } catch (Exception e) {
-            System.out.println("LocalService execute Error");
+            log.info("LocalService execute Error");
             e.printStackTrace();
         }finally {
             return list;

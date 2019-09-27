@@ -4,6 +4,7 @@ import com.asiainfo.cuc.serverdetective.entity.Server;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -15,6 +16,7 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 @Service
+@Slf4j
 public class CollectService {
 
     @Value("${test.local}")
@@ -118,7 +120,7 @@ public class CollectService {
                 session.connect();
             }
         } catch (Exception e) {
-            System.out.println(server.getHostname() + "Error");
+            log.info(server.getHostname() + "Error");
             e.printStackTrace();
         }finally {
             return session;
@@ -134,7 +136,7 @@ public class CollectService {
     private List<String> execute(Session session,String cmd){
         List<String> list = new ArrayList<>();
         if (session == null) {
-            System.out.println("Session is null!");
+            log.info("Session is null!");
             return list;
         }
         try {

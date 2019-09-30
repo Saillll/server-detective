@@ -15,6 +15,8 @@ public class Server {
     private String username;
     private String password;
     private List<String> apps;
+    boolean keylogin = true;//是否使用免密登录
+    boolean mainserver = false;//监控服务是否放置在这台机器上
 
     public Server() {
     }

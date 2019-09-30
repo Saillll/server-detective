@@ -50,7 +50,7 @@ public class WatcherTask extends QuartzJobBean {
             for(Server server:serversEntity.getList()){
                 List<Map<String,String>> list = new ArrayList<>();
                 //jar放在这个服务器上运行，需要单独列出来，特殊处理
-                if(server.getHostname().equals("web01")){
+                if(server.isMainserver()){
                     list = localService.collect(server);
                 }else{
                     list = collectService.collect(server);

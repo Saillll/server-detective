@@ -89,7 +89,7 @@ public class CollectService {
             //判断是本地运行还是服务器运行
             String sysType = System.getProperties().getProperty("os.name");
             //web02没有免密 直接使用IP 密码登录
-            if(server.getHostname().equals("web02")){
+            if(!server.isKeylogin()){
                 session = jsch.getSession(server.getUsername(), server.getIp(), server.getPort());
                 session.setPassword(server.getPassword());
                 Properties config = new Properties();
@@ -98,22 +98,9 @@ public class CollectService {
                 session.connect();
             }else{
                 //如果是放在服务器上时hostname 而不是ip
-                if(!StringUtils.isEmpty(sysType) ){
-                    if(sysType.toLowerCase().contains("windows")){
-                        host = server.getIp();
-                    }else{
-                        host = server.getHostname();
-                        keyLogin = true;
-                    }
-                }
-                session = jsch.getSession(server.getUsername(), host, server.getPort());
-                if(keyLogin){
-                    //私钥的路径
-                    String privateKey = "/home/admin66/.ssh/id_rsa";
-                    jsch.addIdentity(privateKey);
-                }else{
-                    session.setPassword(server.getPassword());
-                }
+                session = jsch.getSession(server.getUsername(), server.getHostname(), server.getPort());
+                String privateKey = "/home/admin66/.ssh/id_rsa";
+                jsch.addIdentity(privateKey);
                 Properties config = new Properties();
                 config.setProperty("StrictHostKeyChecking", "no");
                 session.setConfig(config);
@@ -239,7 +226,11 @@ public class CollectService {
         }
         String[] detail = disk.split(" ");
         if(detail.length > 0){
-            disk = "[磁盘] 总量" + detail[0] + ",使用" + detail[1] + "剩余"+detail[2] + ",使用率" + detail[3];
+            if(!"".equals(detail[0])){
+                disk = "[磁盘] 总量" + detail[0] + ",使用" + detail[1] + "剩余"+detail[2] + ",使用率" + detail[3];
+            }else{
+                disk = "[磁盘] 暂无挂载磁盘信息";
+            }
         }
         return disk;
     }

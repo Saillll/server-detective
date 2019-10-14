@@ -59,9 +59,9 @@ public class LocalService {
                 }
                 //除去grep本身命令，如果还有一个存在，那么就是服务正常
                 if(size >= 2){
-                    baseMap.put(origincmd,"----服务["+origincmd+"]，存活状态：存活");
+                    baseMap.put(origincmd,"----服务["+origincmd+"]，存活状态：<strong>存活</strong>");
                 }else {
-                    baseMap.put(origincmd,"----服务["+origincmd+"]，存活状态：死亡");
+                    baseMap.put(origincmd,"----服务["+origincmd+"]，存活状态：<strong><font color='red'>死亡</font></strong>");
                 }
             }
         }

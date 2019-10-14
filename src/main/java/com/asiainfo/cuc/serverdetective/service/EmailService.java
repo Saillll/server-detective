@@ -5,8 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMailMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.text.MessageFormat;
 import java.util.Map;
 
 @Service
@@ -46,12 +51,35 @@ public class EmailService {
     }
 
     private void defaultSend(String from,String title,String content,String... to){
-        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setFrom(from);
-        simpleMailMessage.setTo(to);
-        simpleMailMessage.setSubject(title);
-        simpleMailMessage.setText(content);
-        javaMailSender.send(simpleMailMessage);
+//        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+//        simpleMailMessage.setFrom(from);
+//        simpleMailMessage.setTo(to);
+//        simpleMailMessage.setSubject(title);
+//        simpleMailMessage.setText(content);
+//        javaMailSender.send(simpleMailMessage);
+
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = null;
+        try {
+            helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setTo(to);
+            helper.setFrom(from);
+            helper.setSubject(title);
+            helper.setText(buildHtml(content), true);
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        javaMailSender.send(message);
         log.info("邮件发送完毕" );
+    }
+    private static String buildHtml(String content)  {
+
+        String contentText = "<html>\n" +
+                "<body>\n" +
+                content+
+                "</body>\n" +
+                "</html>";
+        return contentText;
     }
 }

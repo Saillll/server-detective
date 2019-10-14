@@ -58,6 +58,12 @@ public class WatcherTask extends QuartzJobBean {
                 stringBuffer.append(assembleEachServer(list));
             }
             String content = stringBuffer.toString();
+            if(content.contains("死亡")){
+                content = ("<h1><strong><font color='yellow'>服务器存在错误</font></strong></h1><br>") + content;
+            }else {
+                content = ("<h1><strong><font color='green'>一切正常</font></strong></h1><br>") + content;
+            }
+
             log.info("=============================================================");
             log.info(content);
             log.info("=============================================================");
@@ -73,19 +79,20 @@ public class WatcherTask extends QuartzJobBean {
     }
     public StringBuffer assembleEachServer(List<Map<String,String>>... infos){
         StringBuffer sb = new StringBuffer();
+        boolean faultExists = false;
         for(List<Map<String,String>> info:infos){
             Map<String,String> baseinfo = info.get(0);
             Map<String,String> appinfo = info.get(1);
             for (Map.Entry<String, String> m : baseinfo.entrySet()) {
                 sb.append( m.getValue());
-                sb.append("\n");
+                sb.append("<br>");
             }
             for (Map.Entry<String, String> m : appinfo.entrySet()) {
                 sb.append( m.getValue());
-                sb.append("\n");
+                sb.append("<br>");
             }
-            sb.append("\n");
-            sb.append("\n");
+            sb.append("<br>");
+            sb.append("<br>");
 
         }
         return sb;

@@ -227,7 +227,15 @@ public class CollectService {
         String[] detail = disk.split(" ");
         if(detail.length > 0){
             if(!"".equals(detail[0])){
-                disk = "[磁盘] 总量" + detail[0] + ",使用" + detail[1] + "剩余"+detail[2] + ",使用率" + detail[3];
+                String warning = detail[2].substring(0,detail[2].length()-1);
+                double warningDisk = Double.parseDouble(warning);
+                if( warningDisk < 7.0){
+                    disk = disk + "<font color='yellow'>";
+                    disk = disk + "[磁盘] 总量" + detail[0] + ",使用" + detail[1] + "剩余"+detail[2] + ",使用率" + detail[3];
+                    disk = disk + "</font>";
+                }else{
+                    disk = "[磁盘] 总量" + detail[0] + ",使用" + detail[1] + "剩余"+detail[2] + ",使用率" + detail[3];
+                }
             }else{
                 disk = "[磁盘] 暂无挂载磁盘信息";
             }

@@ -5,3 +5,4 @@
 例如，有5台服务器，web01,web02...05，只有01可以通过外网访问，其他都是内网访问，那么在servers.yml中配置5台服务器的信息，把jar放到01上运行。  
 01会向02...05发送shell命令获取信息，然后解析，拼接成邮件内容。
 
+![服务器分布/Servers Distribution](https://raw.githubusercontent.com/MCJIBA/server-detective/master/src/main/resources/example.jpg)
